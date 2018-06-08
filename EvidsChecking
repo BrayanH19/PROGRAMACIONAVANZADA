@@ -1,0 +1,95 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package evidencias;
+
+import java.awt.*;
+import java.awt.event.*;
+
+/**
+ *
+ * @author Brayan Hernández
+ */
+public class EvidsChecking implements ActionListener {
+
+    Frame F;
+    Panel P;
+    TextField TF1, TF2;
+    Button BotonAgregarEvid;
+    TextArea TA;
+    MenuBar MB;
+    Menu M, M1;
+    MenuItem MIAbrir, MISalir;
+
+    public EvidsChecking() {
+        F = new Frame("Evidencias de Discentes");
+        F.setMenuBar(MB = new MenuBar());
+        M = new Menu("Archivo");
+        F.setMenuBar(MB);
+        M = new Menu("Archivo");
+        MB.add(M);
+        MIAbrir = new MenuItem("Abrir");
+        M.add(MIAbrir);
+        M.addSeparator();
+        MISalir = new MenuItem("Salir");
+        M.add(MISalir);
+        MISalir.addActionListener(this);
+        F.setLayout(new BorderLayout());
+        P = _llenar_Panel();
+        F.add(P, BorderLayout.NORTH);
+        TA = new TextArea();
+        F.add(TA, BorderLayout.CENTER);
+        F.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                F.dispose();
+                System.exit(0);
+            }
+        });
+        BotonAgregarEvid.addActionListener(this);
+
+        F.setLocationRelativeTo(null);
+        F.setSize(600, 450);
+        F.setResizable(false);
+        F.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource().equals(BotonAgregarEvid)) {
+            String str = TF1.getText();
+            TF1.setText("");
+            String str1 = TF2.getText();
+            TF2.setText("");
+            String str2 = TA.getText();
+            if (str2.equals("") == false) {
+                str2 = str2 + "\n";
+            }
+            str2 = str2 + str + "\n" + str1;
+            TA.setText(str2);
+        } else if (ae.getSource().equals(MISalir)) {
+            F.dispose();
+            System.exit(0);
+        }
+    }
+
+    private Panel _llenar_Panel() {
+        Panel p = new Panel();
+        p.setLayout(new FlowLayout());
+        TF1 = new TextField(10);
+        TF2 = new TextField(48);
+        TF1.setText("Boleta");
+        TF2.setText("Nombre de evidencia");
+        BotonAgregarEvid = new Button("Agregar Evidencia");
+        p.add(TF1);
+        p.add(TF2);
+        p.add(BotonAgregarEvid);
+        return p;
+    }
+
+    public static void main(String[] args) {
+        new EvidsChecking();
+    }
+
+}
